@@ -3,4 +3,4 @@ project(untitled1)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(DEMO Demo.cpp sources/BinaryTree.cpp sources/BinaryTree.hpp)
+add_executable(DEMO Demo.cpp sources/BinaryTree.hpp)

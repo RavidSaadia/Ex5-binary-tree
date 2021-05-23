@@ -59,9 +59,9 @@ namespace ariel {
         public:
             Iterator(Node *node, int type);
 
-            T &operator*() { return _cur_node->_value; }
+           const T &operator*() { return _cur_node->_value; }
 
-            T *operator->() { return &(_cur_node->_value); }
+            const T *operator->() { return &(_cur_node->_value); }
 
             Iterator &operator++();//++i
 
@@ -72,6 +72,8 @@ namespace ariel {
             bool operator!=(const Iterator &iterator) const;
 
         };//Iterator
+
+        Node *fined_exist_value(BinaryTree<T>::Node *n, T value);
 
         Iterator begin_preorder() { return Iterator{_root, 0}; };
 
@@ -88,15 +90,15 @@ namespace ariel {
         Iterator begin() { return begin_inorder(); }
 
         Iterator end() { return end_inorder(); }
-    };
+    };//Binary tree
 
     template<typename T>
     BinaryTree<T> &BinaryTree<T>::add_root(T value) {
-        if (_root == nullptr){
+        if (_root == nullptr) {
             _root = new Node{value};
             ++_size;
-        }else{
-            _root->_value =value;
+        } else {
+            _root->_value = value;
         }
 
         return *this;
@@ -105,12 +107,21 @@ namespace ariel {
     template<typename T>
     BinaryTree<T> &BinaryTree<T>::add_left(T exist_value, T added_value) {
 
-
+        Node *p = fined_exist_value(_root, exist_value);
+        if (p== nullptr){
+            throw;
+        }
+        p->_left->_value = added_value;
         return *this;
     }
 
     template<typename T>
     BinaryTree<T> &BinaryTree<T>::add_right(T exist_value, T added_value) {
+        Node *p = fined_exist_value(_root, exist_value);
+        if (p== nullptr){
+            throw;
+        }
+        p->_right->_value = added_value;
         return *this;
     }
 
@@ -140,14 +151,34 @@ namespace ariel {
 
     template<typename T>
     bool BinaryTree<T>::Iterator::operator==(const BinaryTree<T>::Iterator &iterator) const {
-        return iterator == _cur_node;
+        return _cur_node == iterator._cur_node;
     }
 
     template<typename T>
-    bool BinaryTree<T>::Iterator::operator!=(const BinaryTree<T>::Iterator &iterator) const {
-        return iterator != _cur_node;
+    bool ariel::BinaryTree<T>::Iterator::operator!=(const ariel::BinaryTree<T>::Iterator &iterator) const {
+        return  _cur_node != iterator._cur_node ;
     }
 
+    // inspired by Geeks for Geeks
+    template<typename T>
+    typename BinaryTree<T>::Node *BinaryTree<T>::fined_exist_value(BinaryTree<T>::Node *n, T value) {
+
+        if (n == nullptr) {
+            return nullptr;
+        }
+        if (n->_value == value) {
+            return n;
+        }
+        Node *ans1 = fined_exist_value(n->_left, value);
+        if (ans1 != nullptr) {
+            return ans1;
+        }
+        Node *ans2 = fined_exist_value(n->_right, value);
+        if (ans2 != nullptr) {
+            return ans2;
+        }
+        return ans2;
+    }
 
 }
 #endif //UNTITLED1_BINARYTREE_H
