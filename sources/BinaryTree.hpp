@@ -49,7 +49,11 @@ namespace ariel {
 
         BinaryTree<T> &add_right(T exist_value, T added_value);
 
-        friend std::ostream &operator<<(std::ostream &os, BinaryTree &binaryTree);
+        friend std::ostream &operator<<(std::ostream &os, const BinaryTree<T> &binaryTree){
+
+
+            return os;
+        }
 
         struct Iterator {
         private:
@@ -57,7 +61,7 @@ namespace ariel {
             size_t _i;
             size_t _type; // 0 = pre, 1 = in, 2 = post
         public:
-            Iterator(Node *node, int type);
+            Iterator(Node *node, size_t type);
 
            const T &operator*() { return _cur_node->_value; }
 
@@ -111,8 +115,13 @@ namespace ariel {
         if (p== nullptr){
             throw;
         }
-        p->_left->_value = added_value;
-        return *this;
+        if (p->_left == nullptr) {
+            p->_left = new Node {added_value};
+            return *this;
+        } else{
+            p->_left->_value = added_value;
+            return *this;
+        }
     }
 
     template<typename T>
@@ -121,20 +130,25 @@ namespace ariel {
         if (p== nullptr){
             throw;
         }
-        p->_right->_value = added_value;
-        return *this;
+        if (p->_right == nullptr) {
+            p->_right = new Node {added_value};
+            return *this;
+        } else{
+            p->_right->_value = added_value;
+            return *this;
+        }
     }
 
-    template<typename T>
-    std::ostream &operator<<(std::ostream &os, BinaryTree<T> &binaryTree) {
-
-        return os;
-    }
+//    template<typename T>
+//    std::ostream &operator<<(std::ostream &os, const BinaryTree<T> &binaryTree) {
+//
+//        return os;
+//    }
 
 
     template<typename T>
     typename BinaryTree<T>::Iterator &BinaryTree<T>::Iterator::operator++() {
-
+this->_cur_node = _cur_node->_right;
         return *this;
     }
 
@@ -145,7 +159,7 @@ namespace ariel {
     }
 
     template<typename T>
-    BinaryTree<T>::Iterator::Iterator(BinaryTree::Node *node, int type):_cur_node(node), _type(type) {
+    BinaryTree<T>::Iterator::Iterator(BinaryTree::Node *node, size_t type):_cur_node(node), _type(type) {
         //TODO
     }
 
@@ -180,5 +194,5 @@ namespace ariel {
         return ans2;
     }
 
-}
+}//ariel
 #endif //UNTITLED1_BINARYTREE_H
