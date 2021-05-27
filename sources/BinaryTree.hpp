@@ -155,14 +155,18 @@ namespace ariel {
 
     template<typename T>
     typename BinaryTree<T>::Iterator &BinaryTree<T>::Iterator::operator++() {
-        this->_cur_node = _cur_node->_right;
+//        this->_cur_node = _cur_node->_right;
+        _i++;
+        _cur_node = _arr[_i];
         return *this;
     }
 
     template<typename T>
-    const typename BinaryTree<T>::Iterator BinaryTree<T>::Iterator::operator++(int) {
-
-        return *this;
+    const  typename BinaryTree<T>::Iterator BinaryTree<T>::Iterator::operator++(int) {
+        BinaryTree<T>::Iterator temp = this;
+        _i++;
+        _cur_node = _arr[_i];
+        return temp;
     }
 
     template<typename T>
@@ -204,8 +208,8 @@ namespace ariel {
             return;
         }
         arr.push_back(*root);
-        fill_inOrder(arr, &(*root)->_left);
-        fill_inOrder(arr, &(*root)->_right);
+        fill_preOrder(arr, &(*root)->_left);
+        fill_preOrder(arr, &(*root)->_right);
 
     }
 
@@ -226,8 +230,8 @@ namespace ariel {
         if (*root == nullptr) {
             return;
         }
-        fill_inOrder(arr, &(*root)->_left);
-        fill_inOrder(arr, &(*root)->_right);
+        fill_postOrder(arr, &(*root)->_left);
+        fill_postOrder(arr, &(*root)->_right);
         arr.push_back(*root);
     }
 

@@ -11,7 +11,7 @@
 #include <stdexcept>
 using namespace std;
 
-#include "BinaryTree.hpp"
+#include "sources/BinaryTree.hpp"
 using namespace ariel;
 
 int main() {
@@ -34,16 +34,22 @@ int main() {
   for (auto it=tree_of_ints.begin_preorder(); it!=tree_of_ints.end_preorder(); ++it) {
     cout << (*it) << " " ;
   }  // prints: 1 2 4 5 3
+  cout<<endl;
   for (auto it=tree_of_ints.begin_inorder(); it!=tree_of_ints.end_inorder(); ++it) {
     cout << (*it) << " " ;
-  }  // prints: 4 2 5 1 3 
-  for (auto it=tree_of_ints.begin_postorder(); it!=tree_of_ints.end_postorder(); ++it) {
+  }  // prints: 4 2 5 1 3
+    cout<<endl;
+
+    for (auto it=tree_of_ints.begin_postorder(); it!=tree_of_ints.end_postorder(); ++it) {
     cout << (*it) << " " ;
   }  // prints: 4 5 2 3 1
+    cout<<endl;
 
-  for (int element: tree_of_ints) {  // this should work like inorder
+
+    for (int element: tree_of_ints) {  // this should work like inorder
     cout << element << " " ;
   }  // prints: 4 2 5 1 3 
+    cout<<endl;
 
 
   // The same should work with other types, e.g. with strings:
@@ -60,21 +66,28 @@ int main() {
   for (auto it=tree_of_strings.begin_preorder(); it!=tree_of_strings.end_preorder(); ++it) {
     cout << (*it) << " " ;
   }  // prints: 1 2 4 5 3
-  for (auto it=tree_of_strings.begin_inorder(); it!=tree_of_strings.end_inorder(); ++it) {
+    cout<<endl;
+
+    for (auto it=tree_of_strings.begin_inorder(); it!=tree_of_strings.end_inorder(); ++it) {
     cout << (*it) << " " ;
   }  // prints: 4 2 5 1 3 
+    cout<<endl;
+
   for (auto it=tree_of_strings.begin_postorder(); it!=tree_of_strings.end_postorder(); ++it) {
     cout << (*it) << " " ;
   }  // prints: 4 5 2 3 1
+    cout<<endl;
 
   // demonstrate the arrow operator:
   for (auto it=tree_of_strings.begin_postorder(); it!=tree_of_strings.end_postorder(); ++it) {
     cout << it->size() << " " ;
   }  // prints: 1 1 1 1 1 
+    cout<<endl;
 
 
   for (const string& element: tree_of_strings) {  // this should work like inorder
     cout << element << " " ;
   }   // prints: 4 2 5 1 3 
+    cout<<endl;
 
 }
