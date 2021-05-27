@@ -51,9 +51,12 @@ namespace ariel {
 
         BinaryTree<T> &add_right(T exist_value, T added_value);
 
-        friend std::ostream &operator<<(std::ostream &os, const BinaryTree<T> &binaryTree) {
+        static void printBT(const std::string& prefix, const typename BinaryTree<T>::Node* node, bool isLeft);
 
 
+            friend std::ostream &operator<<(std::ostream &os, const BinaryTree<T> &binaryTree) {
+
+            printBT("",binaryTree._root, false);
             return os;
         }
 
@@ -265,5 +268,21 @@ namespace ariel {
         return ans2;
     }
 
-}//ariel
+    // helped from stack overflow
+    template<typename T>
+     void BinaryTree<T>::printBT(const std::string& prefix, const typename BinaryTree<T>::Node* node, bool isLeft) {
+        if( node != nullptr ) {
+            std::cout << prefix;
+            std::cout << (isLeft ? "├──" : "└──" );
+            // print the value of the node
+            std::cout << node->_value << std::endl;
+            // enter the next tree level - left and right branch
+            printBT( prefix + (isLeft ? "│ " : " "), node->_left, true);
+            printBT( prefix + (isLeft ? "│ " : " "), node->_right, false); }
+    }
+
+
+
+
+        }//ariel
 #endif //UNTITLED1_BINARYTREE_H
