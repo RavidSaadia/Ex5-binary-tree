@@ -8,6 +8,7 @@
 #include <glob.h>
 #include <iosfwd>
 #include <vector>
+#include <iostream>
 
 namespace ariel {
 
@@ -59,7 +60,7 @@ namespace ariel {
         struct Iterator {
         private:
             Node *_cur_node;
-            vector<Node *> _arr;
+            std::vector<Node *> _arr;
             size_t _i = 0;
             size_t _type; // 0 = pre, 1 = in, 2 = post
         public:
@@ -77,11 +78,11 @@ namespace ariel {
 
             bool operator!=(const Iterator &iterator) const;
 
-            void fill_preOrder(vector<Node *> &arr, BinaryTree::Node **root);
+            void fill_preOrder(std::vector<Node *> &arr, BinaryTree::Node **root);
 
-            void fill_inOrder(vector<Node *> &arr, BinaryTree::Node **root);
+            void fill_inOrder(std::vector<Node *> &arr, BinaryTree::Node **root);
 
-            void fill_postOrder(vector<Node *> &arr, BinaryTree::Node **root);
+            void fill_postOrder(std::vector<Node *> &arr, BinaryTree::Node **root);
         };//Iterator
 
         Node *search_in_tree(BinaryTree<T>::Node *n, T value);
@@ -197,7 +198,7 @@ namespace ariel {
                 break;
             }
             default:
-                cout << "the type is not cool!";
+                std::cout << "the type is not cool!";
         }
 
     }
@@ -213,7 +214,7 @@ namespace ariel {
     }
 
     template<typename T>
-    void BinaryTree<T>::Iterator::fill_preOrder(vector<Node *> &arr, BinaryTree::Node **root) {
+    void BinaryTree<T>::Iterator::fill_preOrder(std::vector<Node *> &arr, BinaryTree::Node **root) {
         if (*root == nullptr) {
             return;
         }
@@ -223,7 +224,7 @@ namespace ariel {
     }
 
     template<typename T>
-    void BinaryTree<T>::Iterator::fill_inOrder(vector<Node *> &arr, BinaryTree::Node **root) {
+    void BinaryTree<T>::Iterator::fill_inOrder(std::vector<Node *> &arr, BinaryTree::Node **root) {
 
         if (*root == nullptr) {
             return;
@@ -234,7 +235,7 @@ namespace ariel {
     }
 
     template<typename T>
-    void BinaryTree<T>::Iterator::fill_postOrder(vector<Node *> &arr, BinaryTree::Node **root) {
+    void BinaryTree<T>::Iterator::fill_postOrder(std::vector<Node *> &arr, BinaryTree::Node **root) {
         if (*root == nullptr) {
             return;
         }
