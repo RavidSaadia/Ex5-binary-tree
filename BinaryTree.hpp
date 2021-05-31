@@ -21,12 +21,26 @@ namespace ariel {
             Node *_right;
             Node *_left;
 
-            Node(T value) : _value(value), _left(nullptr), _right(nullptr) {};
+             Node(T value) : _value(value), _left(nullptr), _right(nullptr) {};
 
+            Node(const Node &other) : _value(other._value) {
+                if (other._left != nullptr) {
+                    _left = new Node(*other._left);
+                }
+                if (other._right != nullptr) {
+                    _right = new Node( *other._right);// maybe (*(other))
+                }
+            };
+            Node( Node &&other) noexcept {
+            }
             ~Node() {
                 delete _right;
                 delete _left;
             };
+
+            Node &operator=(Node &other) {
+
+            }
 
         };//NODE
     private:
@@ -34,10 +48,18 @@ namespace ariel {
         size_t _size;
         size_t _depth;
 
-        BinaryTree(const BinaryTree &binaryTree) {};
-
 
     public:
+        BinaryTree(const BinaryTree &binaryTree) {
+            BinaryTree new_tree;
+            new_tree._depth = binaryTree._depth;
+            new_tree._size = binaryTree._size;
+            Node new_root;
+
+            new_tree._root = binaryTree._size;
+
+
+        }
 
         BinaryTree() : _root(nullptr), _size(0), _depth(0) {};
 
@@ -51,15 +73,17 @@ namespace ariel {
 
         BinaryTree<T> &add_right(T exist_value, T added_value);
 
-        static void printBT(const std::string& prefix, const typename BinaryTree<T>::Node* node, bool isLeft);
+        static void printBT(const std::string &prefix, const typename BinaryTree<T>::Node *node, bool isLeft);
 
+        BinaryTree &operator=(BinaryTree &other);
 
-            friend std::ostream &operator<<(std::ostream &os, const BinaryTree<T> &binaryTree) {
+        friend std::ostream &operator<<(std::ostream &os, const BinaryTree<T> &binaryTree) {
 
-            printBT("",binaryTree._root, false);
+            printBT("", binaryTree._root, false);
             return os;
         }
 
+//Iterator
         struct Iterator {
         private:
             Node *_cur_node;
@@ -67,9 +91,10 @@ namespace ariel {
             size_t _i = 0;
             size_t _type; // 0 = pre, 1 = in, 2 = post
         public:
+
             Iterator(Node *node, size_t type);
 
-            const T &operator*() { return _cur_node->_value; }
+            T &operator*() { return _cur_node->_value; }
 
             const T *operator->() { return &(_cur_node->_value); }
 
@@ -245,6 +270,7 @@ namespace ariel {
         fill_postOrder(arr, &(*root)->_left);
         fill_postOrder(arr, &(*root)->_right);
         arr.push_back(*root);
+
     }
 
     // inspired by Geeks for Geeks
@@ -270,19 +296,28 @@ namespace ariel {
 
     // helped from stack overflow
     template<typename T>
-     void BinaryTree<T>::printBT(const std::string& prefix, const typename BinaryTree<T>::Node* node, bool isLeft) {
-        if( node != nullptr ) {
+    void BinaryTree<T>::printBT(const std::string &prefix, const typename BinaryTree<T>::Node *node, bool isLeft) {
+        if (node != nullptr) {
             std::cout << prefix;
-            std::cout << (isLeft ? "├──" : "└──" );
+            std::cout << (isLeft ? "├──" : "└──");
             // print the value of the node
             std::cout << node->_value << std::endl;
             // enter the next tree level - left and right branch
-            printBT( prefix + (isLeft ? "│ " : " "), node->_left, true);
-            printBT( prefix + (isLeft ? "│ " : " "), node->_right, false); }
+            printBT(prefix + (isLeft ? "│ " : " "), node->_right, true);
+            printBT(prefix + (isLeft ? "│ " : " "), node->_left, false);
+        }
+    }
+
+    template<typename T>
+    BinaryTree<T> &BinaryTree<T>::operator=(BinaryTree &other) {
+        if (this != other) {
+            this->_root = other._root;
+            this->_size = other._size;
+            this->_depth = other._depth;
+        }
+        return *this;
     }
 
 
-
-
-        }//ariel
+}//ariel
 #endif //UNTITLED1_BINARYTREE_H

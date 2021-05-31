@@ -89,5 +89,6 @@ int main() {
     cout << element << " " << flush;
   }   // prints: 4 2 5 1 3 
     cout<<endl;
+    cout << tree_of_ints << endl;  // Prints the tree in a reasonable format. For example:
 
 }
