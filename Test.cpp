@@ -405,32 +405,16 @@ TEST_CASE ("object in tree") {
     BinaryTree<Car> tree_of_cars;                                  //********************************************
             CHECK_NOTHROW(tree_of_cars.add_root(Car{1}));          //*                                          * └──1
             CHECK_NOTHROW(tree_of_cars.add_left(Car{1}, Car{9}));  //*                 1                        *  ├──3
-            CHECK_NOTHROW(
-            tree_of_cars.add_left(Car{9}, Car{4}));  //*               /   \                      *  │ ├──7
-            CHECK_NOTHROW(
-            tree_of_cars.add_right(Car{9}, Car{5})); //*             2       3                    *  │ └──8
+            CHECK_NOTHROW(tree_of_cars.add_left(Car{9}, Car{4}));  //*               /   \                      *  │ ├──7
+            CHECK_NOTHROW(tree_of_cars.add_right(Car{9}, Car{5})); //*             2       3                    *  │ └──8
             CHECK_NOTHROW(tree_of_cars.add_right(Car{1}, Car{3})); //*            / \     /  \                  *  └──2
-            CHECK_NOTHROW(
-            tree_of_cars.add_left(Car{1}, Car{2}));  //*           4   5   8    7                 *    ├──5
-            CHECK_NOTHROW(
-            tree_of_cars.add_left(Car{3}, Car{8}));  //*                                          *    └──4
+            CHECK_NOTHROW(tree_of_cars.add_left(Car{1}, Car{2}));  //*           4   5   8    7                 *    ├──5
+            CHECK_NOTHROW(tree_of_cars.add_left(Car{3}, Car{8}));  //*                                          *    └──4
             CHECK_NOTHROW(tree_of_cars.add_right(Car{3}, Car{7})); //********************************************
-
-
-
-
-
-
-
-
-
-
 
             SUBCASE("printing") {
         cout << tree_of_cars << endl;
     }
-
-
 }
 
 TEST_CASE ("car`s tree") {
@@ -592,6 +576,8 @@ TEST_CASE ("car`s tree") {
 TEST_CASE ("wrong action") {
             SUBCASE("add node") {
         BinaryTree<int> t1;
+        CHECK_THROWS(t1.add_left(2,4));// add left before root
+        CHECK_THROWS(t1.add_right(2,4));// add right before root
         t1.add_root(3);                      //*******************************************
                 CHECK_NOTHROW(t1.add_left(3, 1));  //*                                          *
                 CHECK_NOTHROW(t1.add_left(1, 0));  //*                  3                       *
