@@ -11,7 +11,7 @@
 
 using namespace std;
 
-#include "BinaryTree.hpp"
+#include "sources/BinaryTree.hpp"
 
 using namespace ariel;
 TEST_CASE ("int tree") {
